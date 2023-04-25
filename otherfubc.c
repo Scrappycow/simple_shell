@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 /**
  * checkbltin - checks if the command entered is a built-in
  * @line: input entered by user
