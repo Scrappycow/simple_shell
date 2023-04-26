@@ -39,22 +39,22 @@ void executepath(char *p, char **tokens)
 		;
 	newp = malloc(sizeof(char) * (len + len2 + 2));
 	_strcpy(newp, p);
-	_strcat(newp, "/"); 
+	_strcat(newp, "/");
 	_strcat(newp, tokens[0]);
 	newp[(len + len2 + 1)] = '\0';
 
-	child = fork(); 
+	child = fork();
 
 	if (child == 0)
 	{
-		if (access(newp, X_OK) == 0) 
+		if (access(newp, X_OK) == 0)
 		{
 			execve(newp, tokens, environ);
 		}
 	}
 	else
 	{
-		while (waitpid(-1, &status, 0) != child) 
+		while (waitpid(-1, &status, 0) != child)
 			;
 	}
 	if (status == 0)
@@ -74,28 +74,29 @@ int searchpath(char *p, char **tokens)
 	struct dirent *de;
 	int reached = 0, onepath = -1;
 
-	p = strtok(p, ":"); 
+	p = strtok(p, ":");
 	while (p != NULL && reached != 1)
 	{
-		DIR *dr = opendir(p); 
+		DIR *dr = opendir(p);
+
 		if (dr == NULL)
 		{
 			return (0);
 		}
 		while ((de = readdir(dr)) != NULL)
-			
+
 		{
 			if (_strcmp(de->d_name, tokens[0]) == 0)
-			{ 
+			{
 				executepath(p, tokens);
-				
+
 				onepath = 0;
-				
+
 				reached = 1;
 				break;
 			}
 		}
-		closedir(dr); 
+		closedir(dr);
 		if (reached == 0)
 			p = strtok(NULL, ":");
 		}
@@ -117,15 +118,15 @@ int findonpath(char **tokens)
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		if (_strncmp("PATH=", environ[i], 5) == 0)
-			
+
 		{
 			path = _strdup(environ[i]);
 			strtok(path, "=");
-			p = strtok(NULL, "="); 
-			onepath = searchpath(p, tokens); 
+			p = strtok(NULL, "=");
+			onepath = searchpath(p, tokens);
 			break;
 		}
 	}
 	free(path);
-	return (onepath); 
+	return (onepath);
 }

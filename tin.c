@@ -2,8 +2,8 @@
 
 /**
  * _strncmp - function compares two strings
- * @s1: first string 
- * @s2: second string 
+ * @s1: first string
+ * @s2: second string
  * @len: length of string to be compared
  * Return: 0 for success
  */
