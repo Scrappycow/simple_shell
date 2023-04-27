@@ -14,13 +14,13 @@ int main(int argc, char *argv[])
 	char *line = NULL;
 	int i, number_tokens = 0, cmdcount = 1, shell_interaction;
 
-	signal(SIGINT, SIG_IGN); 
+	signal(SIGINT, SIG_IGN);
 	shell_interaction = isatty(STDIN_FILENO);
-	if (shell_interaction == 0 && argc == 1) 
+	if (shell_interaction == 0 && argc == 1)
 	{
-		while (getline(&line, &buffsize, stdin) > 0) 
+		while (getline(&line, &buffsize, stdin) > 0)
 		{
-			number_tokens = numcount(line); 
+			number_tokens = numcount(line);
 			parse(line, number_tokens, argv, cmdcount);
 			line = NULL;
 		}
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	{
 		/**prompt */
 		write(1, "($) ", 4);
-		number_tokens = 0; 
+		number_tokens = 0;
 		i = getline(&line, &buffsize, stdin);
 		if (i < 0)
 		{
@@ -39,10 +39,11 @@ int main(int argc, char *argv[])
 			write(1, "\n", 1);
 			break;
 		}
-		number_tokens = numcount(line); 
+		number_tokens = numcount(line);
 		parse(line, number_tokens, argv, cmdcount);
 		cmdcount++;
-		
-		line = NULL;}
+
+		line = NULL;
+	}
 	return (0);
 }
